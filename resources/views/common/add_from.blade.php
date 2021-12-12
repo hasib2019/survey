@@ -49,7 +49,7 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="inputEmail4">ইউনিয়ন:</label>
-              <select name="unions" id="union" class="form-control">
+              <select name="unions" id="union" class="form-control" required>
                 <option value="">-----সিলেক্ট করুন------</option>
               </select>
             </div>
@@ -63,11 +63,11 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label>তথ্য সংগ্রহকারীর নাম:</label>
-              <input type="text" name="informer_name" id="" class="form-control" placeholder="তথ্য সংগ্রহকারীর নাম">
+              <input type="text" name="informer_name" id="" class="form-control" required placeholder="তথ্য সংগ্রহকারীর নাম">
             </div>
             <div class="form-group col-md-6">
               <label>তথ্য সংগ্রহকারীর পদবি:</label>
-              <input type="text" name="informer_designation" id="" class="form-control" placeholder="তথ্য সংগ্রহকারীর পদবি">
+              <input type="text" name="informer_designation" id="" class="form-control" required placeholder="তথ্য সংগ্রহকারীর পদবি">
             </div>
           </div>
         </div>
@@ -84,32 +84,32 @@
           <div class="form-row">
             <div class="form-group col-md-4">
               <label for="inputEmail4">নাম:</label>
-              <input type="text" name="name" id="" class="form-control" placeholder="নাম">
+              <input type="text" name="name" id="" class="form-control" required placeholder="নাম">
             </div>
             <div class="form-group col-md-4">
               <label>পিতার/স্বামীর নাম:</label>
-              <input type="text" name="father_name" id="" placeholder="পিতার/স্বামীর নাম" class="form-control">
+              <input type="text" name="father_name" id="" placeholder="পিতার/স্বামীর নাম" class="form-control" required>
             </div>
             <div class="form-group col-md-4">
               <label for="inputEmail4">মাতার নাম:</label>
-              <input type="text" name="mother_name" class="form-control" placeholder="মাতার নাম" id="">
+              <input type="text" name="mother_name" class="form-control" required placeholder="মাতার নাম" id="">
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group col-md-4">
               <label for="inputEmail4">মোবাইল নম্বর:</label>
-              <input type="text" name="mobile" id="phone" class="form-control" placeholder="মোবাইল নম্বর লিখুন">
+              <input type="text" name="mobile" id="phone" class="form-control" required placeholder="মোবাইল নম্বর লিখুন">
               <span id="error_phone"></span>
             </div>
             <div class="form-group col-md-4">
               <label>জাতীয় পরিচয়পত্র নং:</label>
-              <input type="text" name="nid" id="nid" class="form-control" placeholder="জাতীয় পরিচয়পত্র নং 123********">
+              <input type="text" name="nid" id="nid" class="form-control" required placeholder="জাতীয় পরিচয়পত্র নং 123********">
               <span id="error_nid"></span>
             </div>
             <div class="form-group col-md-4">
               <label for="inputEmail4">লিঙ্গ:</label>
-              <select name="gender" id="" class="form-control">
+              <select name="gender" id="" class="form-control" required>
                 <option value="">-----সিলেক্ট করুন------</option>
                 <option value="m">পুরুষ</option>
                 <option value="f">মহিলা</option>
@@ -128,22 +128,22 @@
           <div class="form-row">
             <div class="form-group col-md-12">
               <label for="inputEmail4">হোল্ডিং নং:</label>
-              <input type="text" name="holding" id="" class="form-control" placeholder="হোল্ডিং নং">
+              <input type="text" name="holding" id="" class="form-control" required placeholder="হোল্ডিং নং">
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group col-md-4">
               <label for="inputEmail4">জন্ম তারিখ:</label>
-              <input type="text" name="dob" id="demoDate" class="form-control" placeholder="08/12/1991">
+              <input type="text" name="dob" id="demoDate" class="form-control" required placeholder="08/12/1991">
             </div>
             <div class="form-group col-md-4">
               <label>শিক্ষাগত যোগ্যতা:</label>
-              <input type="text" name="edu_qualification" id="" placeholder="শিক্ষাগত যোগ্যতা" class="form-control">
+              <input type="text" name="edu_qualification" id="" placeholder="শিক্ষাগত যোগ্যতা" class="form-control" required>
             </div>
             <div class="form-group col-md-4">
               <label for="inputEmail4">পরিবারের সদস্য সংখ্যা:</label>
-              <input type="text" name="family_member" id="family_member" class="form-control" placeholder="পরিবারের সদস্য সংখ্যা" id="">
+              <input type="text" name="family_member" id="family_member" class="form-control" required placeholder="পরিবারের সদস্য সংখ্যা" id="">
               <span id="error_family_member"></span>
             </div>
           </div>
@@ -151,34 +151,34 @@
           <div class="form-row">
             <div class="form-group col-md-4">
               <label for="inputEmail4">পরিবারের জমির পরিমাণ আবাদী(শতাংশ)?</label>
-              <input type="text" name="land_percent_abadi" id="land_percent_abadi" class="form-control" placeholder="জমির পরিমাণ আবাদী(শতাংশ)?">
+              <input type="text" name="land_percent_abadi" id="land_percent_abadi" class="form-control" required placeholder="জমির পরিমাণ আবাদী(শতাংশ)?">
               <span id="error_land_percent_abadi"></span>
             </div>
             
             <div class="form-group col-md-4">
               <label for="inputEmail4">পরিবারের জমির পরিমাণ অনাবাদী(শতাংশ)?</label>
-              <input type="text" name="land_percent_onabadi" id="land_percent_onabadi" class="form-control" placeholder="জমির পরিমাণ অনাবাদী(শতাংশ)?">
+              <input type="text" name="land_percent_onabadi" id="land_percent_onabadi" class="form-control" required placeholder="জমির পরিমাণ অনাবাদী(শতাংশ)?">
               <span id="error_land_percent_onabadi"></span>
             </div>
             <div class="form-group col-md-4">
               <label>পরিবারে আয়ের উৎস:</label>
-              <input type="text" name="family_income" id="" class="form-control" placeholder="পরিবারে আয়ের উৎস">
+              <input type="text" name="family_income" id="" class="form-control" required placeholder="পরিবারে আয়ের উৎস">
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group col-md-4">
               <label>ব্যক্তিগত আয়ের উৎস:</label>
-              <input type="text" name="personal_income" id="" class="form-control" placeholder="ব্যক্তিগত আয়ের উৎস">
+              <input type="text" name="personal_income" id="" class="form-control" required placeholder="ব্যক্তিগত আয়ের উৎস">
             </div>
             <div class="form-group col-md-4">
               <label for="inputEmail4">বার্ষিক পারিবারিক আয়ের পরিমাণ</label>
-              <input type="text" name="annual_income" id="annual_income" class="form-control" placeholder="বার্ষিক পারিবারিক আয়ের পরিমাণ">
+              <input type="text" name="annual_income" id="annual_income" class="form-control" required placeholder="বার্ষিক পারিবারিক আয়ের পরিমাণ">
               <span id="error_annual_income"></span>
             </div>
             <div class="form-group col-md-4">
               <label>ব্যক্তিগত আয়ের পরিমাণ:</label>
-              <input type="text" name="amount_income" id="amount_income" class="form-control" placeholder="ব্যক্তিগত আয়ের পরিমাণ">
+              <input type="text" name="amount_income" id="amount_income" class="form-control" required placeholder="ব্যক্তিগত আয়ের পরিমাণ">
               <span id="error_amount_income"></span>
             </div>         
           </div>
@@ -186,17 +186,17 @@
           <div class="form-row">
             <div class="form-group col-md-4">
               <label for="inputEmail4">দেশী:</label>
-              <input type="text" name="domestic_animal" id="domestic_animal" class="form-control" placeholder="দেশী গাভী/ষাঁড়ের সংখ্যা">
+              <input type="text" name="domestic_animal" id="domestic_animal" class="form-control" required placeholder="দেশী গাভী/ষাঁড়ের সংখ্যা">
               <span id="error_domestic_animal"></span>
             </div>
             <div class="form-group col-md-4">
               <label>সংকর:</label>
-              <input type="text" name="hybrid_animal" id="hybrid_animal" class="form-control" placeholder="সংকর গাভী/ষাঁড়ের সংখ্যা">
+              <input type="text" name="hybrid_animal" id="hybrid_animal" class="form-control" required placeholder="সংকর গাভী/ষাঁড়ের সংখ্যা">
               <span id="error_hybrid_animal"></span>
             </div>
             <div class="form-group col-md-4">
               <label>উন্নত জাত:</label>
-              <input type="text" name="improved_varieties" id="improved_varieties" class="form-control" placeholder="উন্নত জাত গাভী/ষাঁড়ের সংখ্যা">
+              <input type="text" name="improved_varieties" id="improved_varieties" class="form-control" required placeholder="উন্নত জাত গাভী/ষাঁড়ের সংখ্যা">
               <span id="error_improved_varieties"></span>
             </div>
           </div>
@@ -427,7 +427,7 @@ $(document).ready(function() {
       var error_land_percent_abadi = '';
       var land_percent_abadi = $('#land_percent_abadi').val();
       var _token = $('input[name="_token"]').val();
-      var filter = /^([1-9][0-9]*)$/;
+      var filter =  /^(\d*)([,.]\d{0,2})?$/;
   if(!filter.test(land_percent_abadi))
   {
     $('#error_land_percent_abadi').html('<label class="text-danger">নাম্বর সঠিক নয়</label>');
@@ -446,7 +446,7 @@ $(document).ready(function() {
       var error_land_percent_onabadi = '';
       var land_percent_onabadi = $('#land_percent_onabadi').val();
       var _token = $('input[name="_token"]').val();
-      var filter = /^([1-9][0-9]*)$/;
+      var filter =  /^(\d*)([,.]\d{0,2})?$/;
   if(!filter.test(land_percent_onabadi))
   {
     $('#error_land_percent_onabadi').html('<label class="text-danger">নাম্বর সঠিক নয়</label>');
@@ -465,7 +465,7 @@ $(document).ready(function() {
       var error_annual_income = '';
       var annual_income = $('#annual_income').val();
       var _token = $('input[name="_token"]').val();
-      var filter = /^([1-9][0-9]*)$/;
+      var filter =  /^(\d*)([,.]\d{0,2})?$/;
   if(!filter.test(annual_income))
   {
     $('#error_annual_income').html('<label class="text-danger">নাম্বর সঠিক নয়</label>');
@@ -484,7 +484,7 @@ $(document).ready(function() {
       var error_amount_income = '';
       var amount_income = $('#amount_income').val();
       var _token = $('input[name="_token"]').val();
-      var filter = /^([1-9][0-9]*)$/;
+      var filter =  /^(\d*)([,.]\d{0,2})?$/;
   if(!filter.test(amount_income))
   {
     $('#error_amount_income').html('<label class="text-danger">নাম্বর সঠিক নয়</label>');
@@ -503,7 +503,7 @@ $(document).ready(function() {
       var error_domestic_animal = '';
       var domestic_animal = $('#domestic_animal').val();
       var _token = $('input[name="_token"]').val();
-      var filter = /^([1-9][0-9]*)$/;
+      var filter = /^(\d*)(\d{0,2})?$/;
   if(!filter.test(domestic_animal))
   {
     $('#error_domestic_animal').html('<label class="text-danger">নাম্বর সঠিক নয়</label>');
@@ -522,7 +522,7 @@ $(document).ready(function() {
       var error_hybrid_animal = '';
       var hybrid_animal = $('#hybrid_animal').val();
       var _token = $('input[name="_token"]').val();
-      var filter = /^([1-9][0-9]*)$/;
+      var filter = /^(\d*)(\d{0,2})?$/;
   if(!filter.test(hybrid_animal))
   {
     $('#error_hybrid_animal').html('<label class="text-danger">নাম্বর সঠিক নয়</label>');
@@ -541,7 +541,7 @@ $(document).ready(function() {
       var error_improved_varieties = '';
       var improved_varieties = $('#improved_varieties').val();
       var _token = $('input[name="_token"]').val();
-      var filter = /^([1-9][0-9]*)$/;
+      var filter = /^(\d*)(\d{0,2})?$/;
   if(!filter.test(improved_varieties))
   {
     $('#error_improved_varieties').html('<label class="text-danger">নাম্বর সঠিক নয়</label>');
