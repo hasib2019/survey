@@ -1,0 +1,12 @@
+
+alert()->message('Sweet Alert with message.');
+
+alert()->basic('Sweet Alert with basic.','Basic');
+
+alert()->info('Sweet Alert with info.');
+
+alert()->success('Sweet Alert with success.','Welcome to ItSolutionStuff.com')->autoclose(3500);
+
+alert()->error('Sweet Alert with error.');
+
+alert()->warning('Sweet Alert with warning.');
