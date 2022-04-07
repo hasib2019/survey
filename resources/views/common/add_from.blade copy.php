@@ -28,7 +28,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="tile">
-          <form action="@if (Auth::user()->is_admin==1){{ route('admin.survay') }} @elseif(Auth::user()->is_admin==2) {{ route('survay') }} @endif" method="post" enctype="multipart/form-data">
+          <form action="@if (Auth::user()->is_admin==1){{ route('admin.survay') }} @elseif(Auth::user()->is_admin==2) {{ route('survay') }} @endif" method="post">
             @csrf
           <div class="row">
             <img src="{{asset('images/govt1.png')}}" style="height: 79px; position: absolute; top: 5px; left: 7px;" alt="">
@@ -294,7 +294,7 @@
             {{-- image part  --}}
             <div class="form-group col-md-6">
               <label>সুফলভোগী ছবি যোগ করুন</label>
-              <input type="file" name="ben_image" id="ben_image" class="form-control">
+              <input type="file" name="image" id="image" class="form-control">
             </div>
 
           </div>

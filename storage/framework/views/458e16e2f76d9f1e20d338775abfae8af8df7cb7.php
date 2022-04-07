@@ -28,7 +28,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="tile">
-          <form action="<?php if(Auth::user()->is_admin==1): ?><?php echo e(route('admin.survay')); ?> <?php elseif(Auth::user()->is_admin==2): ?> <?php echo e(route('survay')); ?> <?php endif; ?>" method="post">
+          <form action="<?php if(Auth::user()->is_admin==1): ?><?php echo e(route('admin.survay')); ?> <?php elseif(Auth::user()->is_admin==2): ?> <?php echo e(route('survay')); ?> <?php endif; ?>" method="post" enctype="multipart/form-data">
             <?php echo csrf_field(); ?>
           <div class="row">
             <img src="<?php echo e(asset('images/govt1.png')); ?>" style="height: 79px; position: absolute; top: 5px; left: 7px;" alt="">
@@ -291,6 +291,12 @@
                 <option value="n">না</option>
               </select>
             </div>
+            
+            <div class="form-group col-md-6">
+              <label>সুফলভোগী ছবি যোগ করুন</label>
+              <input type="file" name="ben_image" id="ben_image" class="form-control">
+            </div>
+
           </div>
 
         </div>

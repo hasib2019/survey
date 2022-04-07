@@ -48,6 +48,7 @@ class CreateElectionSurveysTable extends Migration
             $table->string('any_loan_source')->nullable();
             $table->string('allowance_source')->nullable();
             $table->string('wish_project_loan')->nullable();
+            $table->string('ben_image')->nullable();
             $table->boolean('status')->nullable();
             $table->softDeletes();
             $table->timestamps();
