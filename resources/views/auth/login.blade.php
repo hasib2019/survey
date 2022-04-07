@@ -17,7 +17,12 @@
     </section>
     <section class="login-content">
       <div class="logo">
-        <!-- <h1>Vali</h1> -->
+        <div class="col-lg-12" style="text-align: center">
+          <img src="{{asset('images/govt1.png')}}" style="height: 79px;" alt="">
+          <h4>গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</h4>
+          <h5>প্রকল্প পরিচালক-এর কার্যালয়</h5>
+          <p>“দুগ্ধ ও মাংস উৎপাদনের মাধ্যমে গ্রামীণ কর্মসংস্থান সৃষ্টির লক্ষ্যে যশোর ও মেহেরপুর জেলায় সমবায় কার্যক্রম বিস্তৃতকরণ” শীর্ষক প্রকল্প বিভাগীয় সমবায় কার্যালয়, খুলনা।</p>
+        </div>
       </div>
       <div class="login-box">
         <form method="POST" class="login-form" action="{{ route('login') }}">

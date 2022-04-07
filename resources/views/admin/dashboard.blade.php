@@ -14,7 +14,7 @@
     </div>
     <div class="row">
       <div class="col-md-6 col-lg-3">
-        <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
+        <div class="widget-small primary coloured-icon"><i class="icon fa fa-user fa-3x"></i>
           <div class="info">
             <h4>ব্যবহারকারীরা</h4>
             <p><b>@php echo App\Models\User::all()->count(); @endphp</b></p>
@@ -22,7 +22,7 @@
         </div>
       </div>
       <div class="col-md-6 col-lg-3">
-        <div class="widget-small info coloured-icon"><i class="icon fa fa-thumbs-o-up fa-3x"></i>
+        <div class="widget-small info coloured-icon"><i class="icon fa fa-users fa-3x"></i>
           <div class="info">
             <h4>মোট সুবিধাভোগী</h4>
             <p><b>@php echo App\Models\ElectionSurvey::all()->count(); @endphp</b></p>
@@ -30,7 +30,7 @@
         </div>
       </div>
       <div class="col-md-6 col-lg-3">
-        <div class="widget-small warning coloured-icon"><i class="icon fa fa-files-o fa-3x"></i>
+        <div class="widget-small warning coloured-icon"><i class="icon fa fa-male fa-3x"></i>
           <div class="info">
             <h4>পুরুষ সুবিধাভোগী</h4>
             <p><b>@php echo App\Models\ElectionSurvey::where('gender', 'm')->count(); @endphp</b></p>
@@ -38,7 +38,7 @@
         </div>
       </div>
       <div class="col-md-6 col-lg-3">
-        <div class="widget-small danger coloured-icon"><i class="icon fa fa-star fa-3x"></i>
+        <div class="widget-small danger coloured-icon"><i class="icon fa fa-female fa-3x"></i>
           <div class="info">
             <h4>মহিলা সুবিধাভোগী</h4>
             <p><b>@php echo App\Models\ElectionSurvey::where('gender', 'f')->count(); @endphp</b></p>

@@ -4,13 +4,13 @@
 <main class="app-content">
     <div class="app-title">
       <div>
-        <h1><i class="fa fa-edit"></i>Village Add Form</h1>
+        <h1><i class="fa fa-edit"></i>নতুন ব্যবহারকারী ফরম</h1>
         {{-- <p>Bootstrap default form components</p> --}}
       </div>
       <ul class="app-breadcrumb breadcrumb">
         <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
         <li class="breadcrumb-item">Forms</li>
-        <li class="breadcrumb-item"><a href="#">Village Add Form</a></li>
+        <li class="breadcrumb-item"><a href="#">নতুন ব্যবহারকারী ফরম</a></li>
       </ul>
     </div>
     <div class="row">
@@ -29,30 +29,30 @@
               <div class="col-lg-12 border">
                 <div class="form-row">
                   <div class="form-group col-md-6">
-                    <label for="inputEmail4">Name:</label>
-                    <input type="text" name="name" id="" class="form-control" placeholder="Enter Your Name" required>
+                    <label for="inputEmail4">নাম</label>
+                    <input type="text" name="name" id="" class="form-control" placeholder="নাম প্রবেশ করুন" required>
                   </div>
                   <div class="form-group col-md-6">
-                    <label>Email</label>
-                    <input type="email" name="email" class="form-control" placeholder="Enter Your Email" id="" required>
+                    <label>ই-মেইল</label>
+                    <input type="email" name="email" class="form-control" placeholder="ই-মেইল প্রবেশ করুন" id="" required>
                   </div>
                 </div>
                 <div class="form-row">
                 <div class="form-group col-md-6">
-                  <label for="inputEmail4">User Name:</label>
-                  <input type="text" name="user_name" id="" class="form-control" placeholder="Enter User Name" required>
+                  <label for="inputEmail4">ব্যবহারকারীর নাম</label>
+                  <input type="text" name="user_name" id="" class="form-control" placeholder="ব্যবহারকারীর নাম প্রবেশ করুন" required>
                 </div>
                 
                 <div class="form-group col-md-6">
-                  <label for="inputEmail4">Password:</label>
-                  <input type="password" name="password" id="" class="form-control" placeholder="Enter password">
+                  <label for="inputEmail4">পাসওয়ার্ড</label>
+                  <input type="password" name="password" id="" class="form-control" placeholder="পাসওয়ার্ড প্রবেশ করুন">
                 </div>
               </div>
               <div class="form-row">
                 <div class="form-group col-md-6">
-                  <label for="inputEmail4">Role:</label>
+                  <label for="inputEmail4">রোল</label>
                   <select name="role" class="form-control" id="role" required>
-                    <option value="">---- select role------</option>
+                    <option value="">----রোল সিলেক্ট করুন------</option>
                     <option value="1">Super Admin</option>
                     <option value="2">Admin</option>
                     <option value="0">User</option>

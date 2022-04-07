@@ -12,12 +12,26 @@
         <li class="breadcrumb-item"><a href="#">সুবিধাভোগী যোগ করুন</a></li>
       </ul>
     </div>
+    {{-- /////////////////////////////////////////////////////////////////////////////////// --}}
+      @php
+      $allData = App\Models\ElectionSurvey::where('user_id', Auth::user()->id)->where('saveaddress',1)->latest('id')->first();
+
+      $districtData = $allData?$allData->district:"";
+      $upazilaData = $allData?$allData->upazilas:"";
+      $unionData = $allData?$allData->unions:"";
+      $villageData = $allData?$allData->village:"";
+      $infoName = $allData?$allData->informer_name:"";
+      $infoDes  = $allData?$allData->informer_designation:"";
+   
+      @endphp
+    {{-- /////////////////////////////////////////////////////////////////////////////////// --}}
     <div class="row">
       <div class="col-md-12">
         <div class="tile">
           <form action="@if (Auth::user()->is_admin==1){{ route('admin.survay') }} @elseif(Auth::user()->is_admin==2) {{ route('survay') }} @endif" method="post">
             @csrf
           <div class="row">
+            <img src="{{asset('images/govt1.png')}}" style="height: 79px; position: absolute; top: 5px; left: 7px;" alt="">
             <div class="col-lg-12" style="text-align: center">
               <h4>গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</h4>
               <h5>প্রকল্প পরিচালক-এর কার্যালয়</h5>
@@ -32,42 +46,60 @@
               <select name="district" id="demoSelect" class="form-control" required>
                 <option value="">-----সিলেক্ট করুন------</option>
                 @foreach ($district as $districts)
-                <option value="{{$districts->id}}">{{$districts->district_name_bangla}}</option>
+                <option value="{{$districts->id}}" @if($districts->id==$districtData) selected @endif>{{$districts->district_name_bangla}}</option>
                 @endforeach
                 
               </select>
             </div>
             <div class="form-group col-md-6">
               <label>উপজেলা:</label>
+              
               <select name="upazilas" id="upazila" class="form-control" required>
-                <option value="">-----সিলেক্ট করুন------</option>
+                @php
+                echo $upazilaAllData = App\Models\UpazilaInfo::where('id', $upazilaData)->get();
+                @endphp
+                 <option value="">-----সিলেক্ট করুন------</option>
+                @foreach ($upazilaAllData as $disData)
+                <option value="{{$disData->id}}" @if($disData->id==$upazilaData) selected @endif>{{$disData->upazila_name_bangla}}</option>
+                @endforeach
               </select>
             </div>
-            
+           
           </div>
-
+          
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="inputEmail4">ইউনিয়ন:</label>
               <select name="unions" id="union" class="form-control" required>
                 <option value="">-----সিলেক্ট করুন------</option>
+               @php
+               echo $uionAllData = App\Models\UnionInfo::where('upazila_id', $upazilaData)->get();
+               @endphp
+               @foreach ($uionAllData as $uniData)
+               <option value="{{$uniData->id}}" @if($uniData->id==$unionData) selected @endif>{{$uniData->union_name_bangla}}</option>
+               @endforeach
               </select>
             </div>
             <div class="form-group col-md-6">
               <label>গ্রাম:</label>
               <select name="village" id="villageall" class="form-control">
-                {{-- <option value="">-----সিলেক্ট করুন------</option> --}}
+                @php
+               echo $villData = App\Models\VillageInfo::where('id', $villageData)->get();
+               @endphp
+               @foreach ($villData as $vilData)
+               <option value="{{$vilData->id}}" @if($vilData->id==$villageData) selected @endif>{{$vilData->village_name_bangla}}</option>
+               @endforeach
               </select>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label>তথ্য সংগ্রহকারীর নাম:</label>
-              <input type="text" name="informer_name" id="" class="form-control" required placeholder="তথ্য সংগ্রহকারীর নাম">
+              <input type="text" name="informer_name" id="" value="@php echo $infoName; @endphp" class="form-control" required placeholder="তথ্য সংগ্রহকারীর নাম">
             </div>
             <div class="form-group col-md-6">
               <label>তথ্য সংগ্রহকারীর পদবি:</label>
-              <input type="text" name="informer_designation" id="" class="form-control" required placeholder="তথ্য সংগ্রহকারীর পদবি">
+              <input type="text" name="informer_designation" value="@php echo $infoDes; @endphp" id="" class="form-control" required placeholder="তথ্য সংগ্রহকারীর পদবি">
             </div>
           </div>
         </div>
@@ -203,7 +235,7 @@
 
           <div class="form-row">
             <div class="form-group col-md-4">
-              <label>আপনি গাভী/ষাঁড় পালন করেন কিনা?:</label>
+              <label>আপনি গাভী/ষাঁড় পালন করেন কিনা?</label>
               <select name="animal_status" id="" class="for form-control">
                 <option value="">-----সিলেক্ট করুন------</option>
                 <option value="y">হ্যাঁ</option>
@@ -290,6 +322,7 @@ $('#union').select2();
   $("#demoSelect").on('change',function(e){
     e.preventDefault();
     var ddlthana=$("#upazila");
+    var ddlship=$("#union");
     $.ajaxSetup({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -302,41 +335,61 @@ $('#union').select2();
       success:function(response){
           // var jsonData=JSON.parse(response);
           $('option', ddlthana).remove();
-          $('#upazila').append('<option value="">-----সিলেক্ট করুন------</option>');
+          // $('#upazila').append('<option value="">-----সিলেক্ট করুন------</option>');
+         
           $.each(response, function(){
+            this.upazilaId = this.id;
+            console.log(this.upazilaId)
             $('<option/>', {
               'value': this.id,
               'text': this.upazila_name_bangla
             }).appendTo('#upazila');
+            /////////////////////////////////////////////////////////////
+            $.ajax({
+              type:'POST',
+              url: "{{url('/unions-by-upazila')}}",
+              data:{_token:$('input[name=_token]').val(),upazilas: this.id},
+              success:function(response){
+                  $('option', ddlship).remove();
+                  $('#union').append('<option value="">-----সিলেক্ট করুন------</option>');
+                  $.each(response, function(){
+                    $('<option/>', {
+                      'value': this.id,
+                      'text': this.union_name_bangla
+                    }).appendTo('#union');
+                  });
+                }
+              });
           });
         }
       });
   });
 
-  $("#upazila").on('change',function(e){
-    e.preventDefault();
-    var ddlship=$("#union");
-    $.ajaxSetup({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      }
-    });
-    $.ajax({
-      type:'POST',
-      url: "{{url('/unions-by-upazila')}}",
-      data:{_token:$('input[name=_token]').val(),upazilas:$(this).val()},
-      success:function(response){
-          $('option', ddlship).remove();
-          $('#union').append('<option value="">-----সিলেক্ট করুন------</option>');
-          $.each(response, function(){
-            $('<option/>', {
-              'value': this.id,
-              'text': this.union_name_bangla
-            }).appendTo('#union');
-          });
-        }
-      });
-  });
+  // $("#upazila").on('change',function(e){
+   
+  //   e.preventDefault();
+  //   var ddlship=$("#union");
+  //   $.ajaxSetup({
+  //     headers: {
+  //       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  //     }
+  //   });
+  //   $.ajax({
+  //     type:'POST',
+  //     url: "{{url('/unions-by-upazila')}}",
+  //     data:{_token:$('input[name=_token]').val(),upazilas:$(this).val()},
+  //     success:function(response){
+  //         $('option', ddlship).remove();
+  //         // $('#union').append('<option value="">-----সিলেক্ট করুন------</option>');
+  //         $.each(response, function(){
+  //           $('<option/>', {
+  //             'value': this.id,
+  //             'text': this.union_name_bangla
+  //           }).appendTo('#union');
+  //         });
+  //       }
+  //     });
+  // });
 
   $("#union").on('change',function(e){
     e.preventDefault();

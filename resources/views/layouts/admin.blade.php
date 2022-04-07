@@ -36,7 +36,9 @@
   <body class="app sidebar-mini">
     @include('sweet::alert')
     <!-- Navbar-->
-    <header class="app-header"><a class="app-header__logo" style="font-size: 20px;" href="{{route('home')}}">পল্লী উন্নয়ন ও সমবায়</a>
+    <header class="app-header"><a class="app-header__logo" style="font-size: 14px;" href="{{route('home')}}">
+      <img src="{{asset('images/govt1.png')}}" style="height: 30px; margin-top: -9px;" alt="">
+      পল্লী উন্নয়ন ও সমবায় বিভাগ</a>
       <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
       <!-- Navbar Right Menu-->
       <ul class="app-nav">
@@ -114,18 +116,25 @@
         <li><a class="app-menu__item addvillage user" href="{{ route('view.user') }}" id="user"><i class="app-menu__icon fa fa-user"></i><span class="app-menu__label">ব্যবহারকারী</span></a></li>
         <li><a class="app-menu__item addvillage" href="{{ route('admin.all-village') }}" id="village"><i class="app-menu__icon fa fa-home"></i><span class="app-menu__label">গ্রাম যোগ করুন</span></a></li>
         <li><a class="app-menu__item" href="{{ route('admin.survay.create') }}" id="add_from"><i class="app-menu__icon fa fa-user-plus"></i><span class="app-menu__label">সুবিধাভোগী যোগ করুন</span></a></li>
-
+        
         <li class="treeview" id="report"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-file"></i><span class="app-menu__label">রিপোর্ট</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
-            <li><a class="treeview-item" href="{{route('admin.all_beneficiaries')}}" id="reports"><i class="icon fa fa-circle-o"></i> উপকারভোগীর তালিকা</a></li>
-            <li><a class="treeview-item" href="{{route('admin.village_list')}}" rel="noopener" id="village_search"><i class="icon fa fa-circle-o"></i> গ্রামওয়ারী তালিকা</a></li>
-            <li><a class="treeview-item" href="{{route('admin.union_list')}}" id="union_search"><i class="icon fa fa-circle-o"></i> ইউনিয়নওয়ারী তালিকা</a></li>
-            <li><a class="treeview-item" href="{{route('admin.dis_list')}}" id="dis_search"><i class="icon fa fa-circle-o"></i> সুবিধাবঞ্চিতের ধরণ অনুযায়ী তালিকা</a></li>
-            <li><a class="treeview-item" href="{{route('admin.male_list')}}" id="male_search"><i class="icon fa fa-circle-o"></i> পুরুষ ভিত্তিক তালিকা</a></li>
-            <li><a class="treeview-item" href="{{route('admin.female_list')}}" id="female_search"><i class="icon fa fa-circle-o"></i> মহিলা ভিত্তিক তালিকা</a></li>
-        
-        
-        
+            <li><a class="treeview-item" href="{{route('admin.all_beneficiaries')}}" id="reports"><i class="icon fa fa-users"></i> উপকারভোগীর তালিকা</a></li>
+            <li><a class="treeview-item" href="{{route('admin.village_list')}}" rel="noopener" id="village_search"><i class="icon fa fa-user"></i> গ্রামওয়ারী তালিকা</a></li>
+            <li><a class="treeview-item" href="{{route('admin.union_list')}}" id="union_search"><i class="icon fa fa-user"></i> ইউনিয়নওয়ারী তালিকা</a></li>
+            <li><a class="treeview-item" href="{{route('admin.dis_list')}}" id="dis_search"><i class="icon fa fa-user"></i> সুবিধাবঞ্চিতের ধরণ অনুযায়ী তালিকা</a></li>
+            <li><a class="treeview-item" href="{{route('admin.male_list')}}" id="male_search"><i class="icon fa fa-male"></i> পুরুষ ভিত্তিক তালিকা</a></li>
+            <li><a class="treeview-item" href="{{route('admin.female_list')}}" id="female_search"><i class="icon fa fa-female"></i> মহিলা ভিত্তিক তালিকা</a></li>
+          </ul>
+        </li>
+        {{-- archive data  --}}
+        <li class="treeview" id="recover"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-recycle"></i><span class="app-menu__label">রিকোভারি</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <ul class="treeview-menu">
+            <li><a class="treeview-item" href="{{route('admin.delete.recovery', 1)}}" id="deletes"><i class="icon fa fa-trash"></i> ডিলিট ডাটা</a></li>
+            <li><a class="treeview-item" href="{{route('admin.archive.recovery', 2)}}" rel="archives" id="archives"><i class="icon fa fa-archive"></i> আর্কাইভ ডাটা</a></li>
+          </ul>
+        </li>
+            {{-- admin dashboard  --}}
             @elseif(Auth::user()->is_admin==2)
         <li><a class="app-menu__item" href="{{route('home')}}"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">ড্যাশবোর্ড</span></a></li>
         <li><a class="app-menu__item addvillage" href="{{ route('all-village') }}" id="village"><i class="app-menu__icon fa fa-home"></i><span class="app-menu__label">গ্রাম যোগ করুন</span></a></li>
@@ -133,36 +142,32 @@
 
         <li class="treeview" id="report"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-file"></i><span class="app-menu__label">রিপোর্ট</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
-            <li><a class="treeview-item" href="{{route('all_beneficiaries')}}" id="reports"><i class="icon fa fa-circle-o"></i>উপকারভোগীর তালিকা</a></li>
-            <li><a class="treeview-item" href="{{route('village_list')}}" rel="noopener" id="village_search"><i class="icon fa fa-circle-o"></i> গ্রামওয়ারী তালিকা</a></li>
-            <li><a class="treeview-item" href="{{route('union_list')}}" id="union_search"><i class="icon fa fa-circle-o"></i> ইউনিয়নওয়ারী তালিকা</a></li>
-            <li><a class="treeview-item" href="{{route('dis_list')}}" id="dis_search"><i class="icon fa fa-circle-o"></i> সুবিধাবঞ্চিতের ধরণ অনুযায়ী তালিকা</a></li>
-            <li><a class="treeview-item" href="{{route('male_list')}}" id="male_search"><i class="icon fa fa-circle-o"></i> পুরুষ ভিত্তিক তালিকা</a></li>
-            <li><a class="treeview-item" href="{{route('female_list')}}" id="female_search"><i class="icon fa fa-circle-o"></i> মহিলা ভিত্তিক তালিকা</a></li>
-
+            <li><a class="treeview-item" href="{{route('all_beneficiaries')}}" id="reports"><i class="icon fa fa-users"></i>উপকারভোগীর তালিকা</a></li>
+            <li><a class="treeview-item" href="{{route('village_list')}}" rel="noopener" id="village_search"><i class="icon fa fa-user"></i> গ্রামওয়ারী তালিকা</a></li>
+            <li><a class="treeview-item" href="{{route('union_list')}}" id="union_search"><i class="icon fa fa-user"></i> ইউনিয়নওয়ারী তালিকা</a></li>
+            <li><a class="treeview-item" href="{{route('dis_list')}}" id="dis_search"><i class="icon fa fa-user"></i> সুবিধাবঞ্চিতের ধরণ অনুযায়ী তালিকা</a></li>
+            <li><a class="treeview-item" href="{{route('male_list')}}" id="male_search"><i class="icon fa fa-male"></i> পুরুষ ভিত্তিক তালিকা</a></li>
+            <li><a class="treeview-item" href="{{route('female_list')}}" id="female_search"><i class="icon fa fa-female"></i> মহিলা ভিত্তিক তালিকা</a></li>
+          </ul>
+        </li>
             @elseif(Auth::user()->is_admin==0)
         <li><a class="app-menu__item" href="{{route('home')}}"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">ড্যাশবোর্ড</span></a></li>
      
         <li class="treeview" id="report"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-file"></i><span class="app-menu__label">রিপোর্ট</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
-            <li><a class="treeview-item" href="{{route('user.all_beneficiaries')}}" id="reports"><i class="icon fa fa-circle-o"></i>উপকারভোগীর তালিকা</a></li>
-            <li><a class="treeview-item" href="{{route('user.village_list')}}" rel="noopener" id="village_search"><i class="icon fa fa-circle-o"></i> গ্রামওয়ারী তালিকা</a></li>
-            <li><a class="treeview-item" href="{{route('user.union_list')}}" id="union_search"><i class="icon fa fa-circle-o"></i> ইউনিয়নওয়ারী তালিকা</a></li>
-            <li><a class="treeview-item" href="{{route('user.dis_list')}}" id="dis_search"><i class="icon fa fa-circle-o"></i> সুবিধাবঞ্চিতের ধরণ অনুযায়ী তালিকা</a></li>
-            <li><a class="treeview-item" href="{{route('user.male_list')}}" id="male_search"><i class="icon fa fa-circle-o"></i> পুরুষ ভিত্তিক তালিকা</a></li>
-            <li><a class="treeview-item" href="{{route('user.female_list')}}" id="female_search"><i class="icon fa fa-circle-o"></i> মহিলা ভিত্তিক তালিকা</a></li>
-        @endif
+            <li><a class="treeview-item" href="{{route('user.all_beneficiaries')}}" id="reports"><i class="icon fa fa-users"></i>উপকারভোগীর তালিকা</a></li>
+            <li><a class="treeview-item" href="{{route('user.village_list')}}" rel="noopener" id="village_search"><i class="icon fa fa-user"></i> গ্রামওয়ারী তালিকা</a></li>
+            <li><a class="treeview-item" href="{{route('user.union_list')}}" id="union_search"><i class="icon fa fa-user"></i> ইউনিয়নওয়ারী তালিকা</a></li>
+            <li><a class="treeview-item" href="{{route('user.dis_list')}}" id="dis_search"><i class="icon fa fa-user"></i> সুবিধাবঞ্চিতের ধরণ অনুযায়ী তালিকা</a></li>
+            <li><a class="treeview-item" href="{{route('user.male_list')}}" id="male_search"><i class="icon fa fa-male"></i> পুরুষ ভিত্তিক তালিকা</a></li>
+            <li><a class="treeview-item" href="{{route('user.female_list')}}" id="female_search"><i class="icon fa fa-female"></i> মহিলা ভিত্তিক তালিকা</a></li>
           </ul>
+        </li>
+        @endif
+          
           <li><a class="app-menu__item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="app-menu__icon fa fa-sign-out"></i><span class="app-menu__label">প্রস্থান</span></a>
-        </li>
-
-           {{-- <li><a class="dropdown-item" href="{{ route('logout') }}" ><i class="fa fa-sign-out fa-lg"></i>{{ __('প্রস্থান') }}</a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-               @csrf
-            </form>
-           </li> --}}
-
-        </li>
+          </li>
+        
       </ul>
     </aside>
     @yield('content')

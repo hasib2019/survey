@@ -11,6 +11,8 @@ use App\Models\VillageInfo;
 use DB;
 use Response;
 use Auth;
+use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class ElectionSurveyController extends Controller
 {
@@ -33,7 +35,6 @@ class ElectionSurveyController extends Controller
     {
         // $district = DB::table('district_infos')->get();
         $district = DB::table('district_infos')->where('id', 37)->orWhere('id',42)->get();
-        
         // dd($district);
         return view('common.add_from', compact('district'));
     }
@@ -47,6 +48,7 @@ class ElectionSurveyController extends Controller
     public function store(Request $request)
     {
        $survay = new ElectionSurvey();
+       $survay->user_id = Auth::user()->id;
        $survay->district = $request->district;
        $survay->upazilas = $request->upazilas;
        $survay->unions = $request->unions;
@@ -78,9 +80,13 @@ class ElectionSurveyController extends Controller
        $survay->any_loan_source = $request->any_loan_source;
        $survay->allowance_source = $request->allowance_source;
        $survay->wish_project_loan = $request->wish_project_loan;
+       $survay->saveaddress = 1;
         if($survay->save()){
+        
+            // dd($saveData['district']);
+            
             alert()->success('Survey Save Sucessfull!')->autoclose(2000);
-            if (Auth::user()->is_admin==1){ 
+            if (Auth::user()->is_admin==1){
                 return redirect()->route('admin.survay.create');
             }elseif(Auth::user()->is_admin==2) { 
                 return redirect()->route('survay.create');
@@ -146,9 +152,12 @@ class ElectionSurveyController extends Controller
      * @param  \App\Models\ElectionSurvey  $electionSurvey
      * @return \Illuminate\Http\Response
      */
-    public function edit(ElectionSurvey $electionSurvey)
+    public function edit(ElectionSurvey $electionSurvey, $id)
     {
-        //
+        $district = DB::table('district_infos')->where('id', 37)->orWhere('id',42)->get();
+        $allSurveyData = ElectionSurvey::where('id', $id)->first();
+        // dd($allSurveyData->id);
+        return view('common.edit_from', compact('district', 'allSurveyData'));   
     }
 
     /**
@@ -160,7 +169,50 @@ class ElectionSurveyController extends Controller
      */
     public function update(Request $request, ElectionSurvey $electionSurvey)
     {
-        //
+        // dd($request->id);
+        $survay = ElectionSurvey::find($request->id);
+        $survay->user_id = Auth::user()->id;
+        $survay->district = $request->district;
+        $survay->upazilas = $request->upazilas;
+        $survay->unions = $request->unions;
+        $survay->village = $request->village;
+        $survay->informer_name = $request->informer_name;
+        $survay->informer_designation = $request->informer_designation;
+        $survay->name = $request->name;
+        $survay->father_name = $request->father_name;
+        $survay->mother_name = $request->mother_name;
+        $survay->mobile = $request->mobile;
+        $survay->nid = $request->nid;
+        $survay->gender = $request->gender;
+        $survay->holding = $request->holding;
+        $survay->dob = $request->dob;
+        $survay->edu_qualification = $request->edu_qualification;
+        $survay->family_member = $request->family_member;
+        $survay->land_percent_abadi = $request->land_percent_abadi;
+        $survay->land_percent_onabadi = $request->land_percent_onabadi;
+        $survay->family_income = $request->family_income;
+        $survay->personal_income = $request->personal_income;
+        $survay->annual_income = $request->annual_income;
+        $survay->amount_income = $request->amount_income;
+        $survay->domestic_animal = $request->domestic_animal;
+        $survay->hybrid_animal = $request->hybrid_animal;
+        $survay->improved_varieties = $request->improved_varieties;
+        $survay->animal_status = $request->animal_status;
+        $survay->wish_animal = $request->wish_animal;
+        $survay->disadvantages_types = $request->disadvantages_types;
+        $survay->any_loan_source = $request->any_loan_source;
+        $survay->allowance_source = $request->allowance_source;
+        $survay->wish_project_loan= $request->wish_project_loan;
+        $survay->saveaddress = 1;
+         if($survay->save()){
+             alert()->success('Survey Update Sucessfull!')->autoclose(3000);
+             if (Auth::user()->is_admin==1){
+                 return redirect()->route('admin.all_beneficiaries');
+             }
+         }else{
+             alert()->error('Data Not Update');
+             return back();
+         }
     }
 
     /**
@@ -169,9 +221,44 @@ class ElectionSurveyController extends Controller
      * @param  \App\Models\ElectionSurvey  $electionSurvey
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ElectionSurvey $electionSurvey)
+    public function destroy(ElectionSurvey $electionSurvey, $id)
     {
-        //
+        // if($survey = ElectionSurvey::find($id)->delete()){
+        //     alert()->success('Survey Data Delete Sucessfull!')->autoclose(3000);
+        //     if (Auth::user()->is_admin==1){
+        //         return redirect()->route('admin.all_beneficiaries');
+        //     }
+        // }else{
+        //     alert()->error('Data Not Update');
+        //     return back();
+        // }
+        $survay = ElectionSurvey::find($id);
+        $survay->deleted_at = Carbon::now();
+        // dd(Carbon::now()->format('d-m-Y'));
+        if($survay->save()){
+            alert()->success('Survey Data Delete Sucessfull!')->autoclose(3000);
+            if (Auth::user()->is_admin==1){
+                return redirect()->route('admin.all_beneficiaries');
+            }
+        }else{
+            alert()->error('Data Not Update');
+            return back();
+        }
+    }
+
+    public function benArchive($id)
+    {
+        $survay = ElectionSurvey::find($id);
+        $survay->status = 0;
+        if($survay->save()){
+            alert()->success('Survey Data Archive Sucessfull!')->autoclose(3000);
+            if (Auth::user()->is_admin==1){
+                return redirect()->route('admin.all_beneficiaries');
+            }
+        }else{
+            alert()->error('Data Not Update');
+            return back();
+        }
     }
     // village section 
     public function all_village()
@@ -242,20 +329,63 @@ class ElectionSurveyController extends Controller
         }
     }
 
+    // recovery  start
+    public function DeleteData($id)
+    {
+
+            $all_ben = ElectionSurvey::where('deleted_at', '!=', null)->get();
+            return view('common.all_recovery_beneficiaries', compact('all_ben', 'id'));
+        
+    }
+    public function RecoverDelete($id)
+    {
+        $survay = ElectionSurvey::find($id);
+        $survay->deleted_at = null;
+        // dd(Carbon::now()->format('d-m-Y'));
+        if($survay->save()){
+            alert()->success('Survey Delete Data Recover Sucessfull!')->autoclose(3000);
+            if (Auth::user()->is_admin==1){
+                return back();
+            }
+        }else{
+            alert()->error('Data Not Update');
+            return back();
+        }
+    }
+
+    public function ArchiveData($id)
+    {
+            $all_ben = ElectionSurvey::where('status', 0)->get();
+            return view('common.all_recovery_beneficiaries', compact('all_ben', 'id'));
+    }
+
+    public function RecoverArchive($id)
+    {
+        $survay = ElectionSurvey::find($id);
+        $survay->status = 1;
+        if($survay->save()){
+            alert()->success('Survey Archive Data Recover Sucessfull!')->autoclose(3000);
+            if (Auth::user()->is_admin==1){
+                return back();
+            }
+        }else{
+            alert()->error('Data Not Update');
+            return back();
+        }
+    }
+
+    // recovery end 
     // report 
     public function all_beneficiaries()
     {
-        // alert()->success('Sweet Alert with success.','Welcome to Era Infotech')->autoclose(1000);
-        // alert()->error('Sweet Alert with error.');
-        $all_ben = ElectionSurvey::all();
-        // dd($all_ben);
+        $all_ben = ElectionSurvey::where('status', 1)->where('deleted_at', null)->get();
         return view('common.all_beneficiaries', compact('all_ben'));
     }
 
     public function village_beneficiaries()
     {
         $village = VillageInfo::all();
-        $all_ben = ElectionSurvey::all();
+        $all_ben = ElectionSurvey::where('status', 1)->where('deleted_at', null)->get();
         $district = DistrictInfo::where('id', 37)->orWhere('id',42)->get();
         return view('common.village_serch', compact('all_ben', 'village', 'district'));
     }
@@ -263,7 +393,7 @@ class ElectionSurveyController extends Controller
     public function village_beneficiaries_search(Request $request)
     {
         $village = VillageInfo::all();
-        $all_ben = ElectionSurvey::where('village', $request->id)->get();
+        $all_ben = ElectionSurvey::where('village', $request->id)->where('status', 1)->where('deleted_at', null)->get();
         $district = DistrictInfo::where('id', 37)->orWhere('id',42)->get();
         return view('common.village_serch', compact('all_ben', 'village', 'district'));
     }
@@ -272,7 +402,7 @@ class ElectionSurveyController extends Controller
     public function union_beneficiaries()
     {
         $union = UnionInfo::all();
-        $all_ben = ElectionSurvey::all();
+        $all_ben = ElectionSurvey::where('status', 1)->where('deleted_at', null);
         $district = DistrictInfo::where('id', 37)->orWhere('id',42)->get();
         return view('common.union_serch', compact('all_ben', 'union', 'district'));
     }
@@ -280,7 +410,7 @@ class ElectionSurveyController extends Controller
     {
         // dd($request->id);
         $union = UnionInfo::all();
-        $all_ben = ElectionSurvey::where('unions', $request->id)->get();
+        $all_ben = ElectionSurvey::where('unions', $request->id)->where('status', 1)->where('deleted_at', null)->get();
         $district = DistrictInfo::where('id', 37)->orWhere('id',42)->get();
         $getId =$request->id;
         return view('common.union_serch', compact('all_ben', 'union', 'district', 'getId'));
@@ -288,23 +418,23 @@ class ElectionSurveyController extends Controller
     // disadvantaged_beneficiaries
     public function disadvantaged_beneficiaries()
     {
-        $all_ben = ElectionSurvey::all();
+        $all_ben = ElectionSurvey::where('status', 1)->where('deleted_at', null);
         return view('common.dis_serch', compact('all_ben'));
     }
     public function disadvantaged_beneficiaries_search(Request $request)
     {
-        $all_ben = ElectionSurvey::where('disadvantages_types', $request->disadvantages_types)->get();
+        $all_ben = ElectionSurvey::where('disadvantages_types', $request->disadvantages_types)->where('status', 1)->where('deleted_at', null)->get();
         return view('common.dis_serch', compact('all_ben'));
     }
     // male search 
     public function male_beneficiaries()
     {
-        $all_ben = ElectionSurvey::where('gender', 'm')->get();
+        $all_ben = ElectionSurvey::where('gender', 'm')->where('status', 1)->where('deleted_at', null)->get();
         return view('common.male_serch', compact('all_ben'));
     }
     public function female_beneficiaries()
     {
-        $all_ben = ElectionSurvey::where('gender', 'f')->get();
+        $all_ben = ElectionSurvey::where('gender', 'f')->where('status', 1)->where('deleted_at', null)->get();
         return view('common.female_serch', compact('all_ben'));
     }
 
