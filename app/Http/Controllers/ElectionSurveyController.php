@@ -13,6 +13,7 @@ use Response;
 use Auth;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use App\Models\ImageDetail;
 
 class ElectionSurveyController extends Controller
 {
@@ -54,7 +55,22 @@ class ElectionSurveyController extends Controller
         $imageName = time() . '.' . $request->ben_image->extension();
         $request->ben_image->move(public_path('benImage'), $imageName);
         ///////////////////////////////////////////////////////
-        // dd($request->ben_image);
+        // dd($request->hasfile('filename'));
+        $this->validate($request, [
+            'filenames' => 'required',
+            'filenames.*' => 'image'
+            ]);
+
+            $files = [];
+            if($request->hasfile('filenames'))
+            {
+                foreach($request->file('filenames') as $file)
+                {
+                    $name = time().rand(1,100).'.'.$file->extension();
+                    $file->move(public_path('benImage'), $name);  
+                    $files[] = $name;  
+                }
+            }
 
         $survay = new ElectionSurvey();
         $survay->user_id = Auth::user()->id;
@@ -91,7 +107,12 @@ class ElectionSurveyController extends Controller
         $survay->wish_project_loan = $request->wish_project_loan;
         $survay->saveaddress = 1;
         $survay->ben_image = $imageName;
-        if($survay->save()){            
+        if($survay->save()){    
+            $surveyImageDetls = new ImageDetail();
+            $surveyImageDetls->ben_id  = $survay->id;
+            $surveyImageDetls->dtl_image = json_encode($files);
+            $surveyImageDetls->status = 1;
+            $surveyImageDetls->save();
             alert()->success('Survey Save Sucessfull!')->autoclose(2000);
             if (Auth::user()->is_admin==1){
                 return redirect()->route('admin.survay.create');
