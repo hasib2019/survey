@@ -89,22 +89,21 @@
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                          <h5 class="modal-title" id="exampleModalLabel">Image Details</h5>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
                         <div class="modal-body">
-                          @foreach(\App\Models\ImageDetail::where('ben_id', $item->id)->get() as $key => $benImage)
+                          @foreach(\App\Models\ImageDetail::select('dtl_image')->where('ben_id', $item->id)->get() as $key => $benImage)
                           @foreach (json_decode($benImage->dtl_image) as $key => $photo)
                               <img class="img-thumbnail" width="150" src="{{ asset('benImage/'.$photo) }}">
+                              {{-- {{$benImage->dtl_image}} --}}
                           @endforeach
-                          {{-- <img src="{{ asset('benImage/'.$benImage) }}" alt=""> --}}
                           @endforeach
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-primary">Save changes</button>
                         </div>
                       </div>
                     </div>
