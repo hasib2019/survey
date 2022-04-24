@@ -96,10 +96,12 @@
                         </div>
                         <div class="modal-body">
                           @foreach(\App\Models\ImageDetail::select('dtl_image')->where('ben_id', $item->id)->get() as $key => $benImage)
+                          {{-- {{$benImage->dtl_image}}/ --}}
+                          @if (!empty($benImage->dtl_image))
                           @foreach (json_decode($benImage->dtl_image) as $key => $photo)
                               <img class="img-thumbnail" width="150" src="{{ asset('benImage/'.$photo) }}">
-                              {{-- {{$benImage->dtl_image}} --}}
                           @endforeach
+                          @endif
                           @endforeach
                         </div>
                         <div class="modal-footer">

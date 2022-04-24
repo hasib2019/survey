@@ -16,7 +16,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="tile">
-          <form action="@if (Auth::user()->is_admin==1){{ route('admin.survay.edit') }} @endif" method="post">
+          <form action="@if (Auth::user()->is_admin==1){{ route('admin.survay.edit') }} @endif" method="post" enctype="multipart/form-data">
             @csrf
           <div class="row">
             <img src="{{asset('images/govt1.png')}}" style="height: 79px; position: absolute; top: 5px; left: 7px;" alt="">
@@ -281,6 +281,41 @@
                 <option @if($allSurveyData->wish_project_loan=='n') selected @endif value="n">না</option>
               </select>
             </div>
+            {{-- image part  --}}
+            <style>
+              .imageOnload{
+                height: 200px;
+                width: 200px;
+                display: block;
+                margin: 0 auto;
+                border: 1px dotted gray;
+              }
+            </style>
+            <div class="form-group col-md-4 border">
+              <h3>সুফলভোগী ছবি যোগ করুন</h3>
+              {{-- <input type="file" name="ben_image" id="ben_image" class="form-control"> --}}
+              <img id="blah" src="{{asset('benImage/profile.png')}}" alt="" class="imageOnload" />
+              <input type='file' name="ben_image" class="form-control" onchange="readURL(this);" />
+            </div>
+            {{-- ////////////////////////////////////////////////////////////////////// --}}
+            <div class="form-group col-md-8 border">
+              <h3>সুফলভোগী অন্যান্য ছবি যোগ করুন</h3>
+              <div class="input-group hdtuto control-group lst increment" >
+                <input type="file" name="filenames[]" class="myfrm form-control">
+                <div class="input-group-btn"> 
+                  <button class="btn btn-success" type="button"><i class="fldemo glyphicon glyphicon-plus"></i>Add</button>
+                </div>
+              </div>
+              <div class="clone hide">
+                <div class="hdtuto control-group lst input-group" style="margin-top:10px">
+                  <input type="file" name="filenames[]" class="myfrm form-control">
+                  <div class="input-group-btn"> 
+                    <button class="btn btn-danger" type="button"><i class="fldemo glyphicon glyphicon-remove"></i> Remove</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{-- ////////////////////////////////////////////////////////////////////// --}}
           </div>
 
         </div>
@@ -307,8 +342,32 @@
 $('#demoSelect').select2();
 $('#upazila').select2();
 $('#union').select2();
+function readURL(input) {
+      if (input.files && input.files[0]) {
+          var reader = new FileReader();
+
+          reader.onload = function (e) {
+              $('#blah')
+                  .attr('src', e.target.result)
+          };
+
+          reader.readAsDataURL(input.files[0]);
+      }
+  }
+</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(".btn-success").click(function(){ 
+        var lsthmtl = $(".clone").html();
+        $(".increment").after(lsthmtl);
+    });
+    $("body").on("click",".btn-danger",function(){ 
+        $(this).parents(".hdtuto").remove();
+    });
+  });
 </script>
 <script>
+  
   $("#demoSelect").on('change',function(e){
     e.preventDefault();
     var ddlthana=$("#upazila");

@@ -55,22 +55,19 @@ class ElectionSurveyController extends Controller
         $imageName = time() . '.' . $request->ben_image->extension();
         $request->ben_image->move(public_path('benImage'), $imageName);
         ///////////////////////////////////////////////////////
-        // dd($request->hasfile('filename'));
         $this->validate($request, [
             'filenames' => 'required',
             'filenames.*' => 'image'
-            ]);
+        ]);
 
-            $files = [];
-            if($request->hasfile('filenames'))
-            {
-                foreach($request->file('filenames') as $file)
-                {
-                    $name = time().rand(1,100).'.'.$file->extension();
-                    $file->move(public_path('benImage'), $name);  
-                    $files[] = $name;  
-                }
+        $files = [];
+        if ($request->hasfile('filenames')) {
+            foreach ($request->file('filenames') as $file) {
+                $name = time() . rand(1, 100) . '.' . $file->extension();
+                $file->move(public_path('benImage'), $name);
+                $files[] = $name;
             }
+        }
 
         $survay = new ElectionSurvey();
         $survay->user_id = Auth::user()->id;
@@ -107,19 +104,19 @@ class ElectionSurveyController extends Controller
         $survay->wish_project_loan = $request->wish_project_loan;
         $survay->saveaddress = 1;
         $survay->ben_image = $imageName;
-        if($survay->save()){    
+        if ($survay->save()) {
             $surveyImageDetls = new ImageDetail();
             $surveyImageDetls->ben_id  = $survay->id;
             $surveyImageDetls->dtl_image = json_encode($files);
             $surveyImageDetls->status = 1;
             $surveyImageDetls->save();
             alert()->success('Survey Save Sucessfull!')->autoclose(2000);
-            if (Auth::user()->is_admin==1){
+            if (Auth::user()->is_admin == 1) {
                 return redirect()->route('admin.survay.create');
-            }elseif(Auth::user()->is_admin==2) { 
+            } elseif (Auth::user()->is_admin == 2) {
                 return redirect()->route('survay.create');
-            } 
-        }else{
+            }
+        } else {
             alert()->error('Data Not Saved');
             return back();
         }
@@ -201,7 +198,27 @@ class ElectionSurveyController extends Controller
      */
     public function update(Request $request, ElectionSurvey $electionSurvey)
     {
-        // dd($request->id);
+        ///////////////////////////////////////////////////////
+        $request->validate([
+            'ben_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $imageName = time() . '.' . $request->ben_image->extension();
+        $request->ben_image->move(public_path('benImage'), $imageName);
+        ///////////////////////////////////////////////////////
+        $this->validate($request, [
+            'filenames' => 'required',
+            'filenames.*' => 'image'
+        ]);
+
+        $files = [];
+        if ($request->hasfile('filenames')) {
+            foreach ($request->file('filenames') as $file) {
+                $name = time() . rand(1, 100) . '.' . $file->extension();
+                $file->move(public_path('benImage'), $name);
+                $files[] = $name;
+            }
+        }
+        ///////////////////////////////////////////////////////
         $survay = ElectionSurvey::find($request->id);
         $survay->user_id = Auth::user()->id;
         $survay->district = $request->district;
@@ -236,7 +253,21 @@ class ElectionSurveyController extends Controller
         $survay->allowance_source = $request->allowance_source;
         $survay->wish_project_loan = $request->wish_project_loan;
         $survay->saveaddress = 1;
+        $survay->ben_image = $imageName;
         if ($survay->save()) {
+            $surveyImageDetls = ImageDetail::where('ben_id', $request->id)->first();
+            // dd($surveyImageDetls->ben_id);
+            if ($surveyImageDetls->ben_id) {
+                $surveyImageDetls->dtl_image = json_encode($files);
+                $surveyImageDetls->status = 1;
+                $surveyImageDetls->save();
+            } else {
+                $surveyImageDetls = new ImageDetail();
+                $surveyImageDetls->ben_id  = $request->id;
+                $surveyImageDetls->dtl_image = json_encode($files);
+                $surveyImageDetls->status = 1;
+                $surveyImageDetls->save();
+            }
             alert()->success('Survey Update Sucessfull!')->autoclose(3000);
             if (Auth::user()->is_admin == 1) {
                 return redirect()->route('admin.all_beneficiaries');
