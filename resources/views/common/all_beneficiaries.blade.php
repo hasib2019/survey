@@ -97,7 +97,7 @@
                         <div class="modal-body">
                           @foreach(\App\Models\ImageDetail::where('ben_id', $item->id)->get() as $key => $benImage)
                           @foreach (json_decode($benImage->dtl_image) as $key => $photo)
-                              <img class="xzoom-gallery" width="150" src="{{ asset('benImage/'.$photo) }}">
+                              <img class="img-thumbnail" width="150" src="{{ asset('benImage/'.$photo) }}">
                           @endforeach
                           {{-- <img src="{{ asset('benImage/'.$benImage) }}" alt=""> --}}
                           @endforeach
