@@ -35,9 +35,10 @@
                   <th>ভাতা পান কিনা?</th>
                   <th>ঋণ গ্রহণে
                     আগ্রহী কিনা?</th>
-                  @if (Auth::user()->is_admin==1) 
+                  <th>ছবি</th>
+                  {{-- @if (Auth::user()->is_admin==1)  --}}
                   <th>সম্পাদন</th>
-                  @endif
+                  {{-- @endif --}}
                 </tr>
               </thead>
               <tbody>
@@ -74,13 +75,40 @@
                   <td>@if($item->any_loan_source == 'y') হ্যাঁ @elseif($item->any_loan_source == 'n') না @endif</td>
                   <td>@if($item->allowance_source == 'y') হ্যাঁ @elseif($item->allowance_source == 'n') না @endif</td>
                   <td>@if($item->wish_project_loan == 'y') হ্যাঁ @elseif($item->wish_project_loan == 'n') না @endif</td>
-                  @if (Auth::user()->is_admin==1) 
+                  <td> <img src="{{asset('benImage/'.$item->ben_image)}}" height="50" width="50" alt=""></td>
                   <td>
+                   <a href="" data-toggle="modal" data-target="#exampleModal"><span class="fa fa-eye"></a> 
+                  @if (Auth::user()->is_admin==1) 
                     <a href="{{route('benEdit', $item->id)}}"><span class="fa fa-edit"></span></a> 
                     <a href="{{route('benDelete', $item->id)}}" onclick="return confirm('আপনি কি ডাটা ডিলিট করতে চান ?')"><span class="fa fa-trash"></span></a>
                     <a href="{{route('benArchive', $item->id)}}" onclick="return confirm('আপনি কি ডাটা আর্কাইভ করতে চান ?')"><span class="fa fa-archive"></span></a>
-                  </td>
                   @endif
+                  </td>
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          @foreach(\App\Models\ImageDetail::where('ben_id', $item->id)->get() as $key => $benImage)
+                          @foreach (json_decode($benImage->dtl_image) as $key => $photo)
+                              <img class="xzoom-gallery" width="150" src="{{ asset('benImage/'.$photo) }}">
+                          @endforeach
+                          {{-- <img src="{{ asset('benImage/'.$benImage) }}" alt=""> --}}
+                          @endforeach
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </tr> 
                 @endforeach
                 </tr>
@@ -92,6 +120,7 @@
     </div>
   </div>
 </main>
+
 @endsection
 
 @section('script')
