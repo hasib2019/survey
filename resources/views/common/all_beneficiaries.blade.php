@@ -75,7 +75,7 @@
                   <td>@if($item->any_loan_source == 'y') হ্যাঁ @elseif($item->any_loan_source == 'n') না @endif</td>
                   <td>@if($item->allowance_source == 'y') হ্যাঁ @elseif($item->allowance_source == 'n') না @endif</td>
                   <td>@if($item->wish_project_loan == 'y') হ্যাঁ @elseif($item->wish_project_loan == 'n') না @endif</td>
-                  <td> <img src="{{asset('benImage/'.$item->ben_image)}}" height="50" width="50" alt=""></td>
+                  <td><img src="{{asset('benImage/'.$item->ben_image)}}" height="50" width="50" alt=""></td>
                   <td>
                    <a href="" data-toggle="modal" data-target="#exampleModal{{$item->id}}"><span class="fa fa-eye"></a> 
                   @if (Auth::user()->is_admin==1) 

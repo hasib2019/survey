@@ -57,6 +57,8 @@
                   <th>মুঠোফোন</th>
                   <th>এনআইডি</th>
                   <th>ঠিকানা</th>
+                  <th>ছবি</th>
+                  <th>অন্যান্য ছবি</th>
                 </tr>
               </thead>
               <tbody>
@@ -90,6 +92,35 @@
                   <td>{{$item->mobile}}</td>
                   <td>{{$item->nid}}</td>
                   <td>{{$village}}, {{$unions}},{{$upazila}}, {{$district}}</td>
+                  <td> <img src="{{asset('benImage/'.$item->ben_image)}}" height="50" width="50" alt=""></td>
+                    <td><a href="" data-toggle="modal" data-target="#exampleModal{{$item->id}}"><span class="fa fa-eye"></a> </td>
+                     <!-- Modal -->
+                  <div class="modal fade" id="exampleModal{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">অন্যান্য ছবির বিবরণ</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          @foreach(json_decode(\App\Models\ImageDetail::select('dtl_image')->where('ben_id', $item->id)->get()) as $key => $benImage)
+                          {{-- {{$benImage->dtl_image}}/ --}}
+                          @if (!empty($benImage->dtl_image))
+                          @foreach (json_decode($benImage->dtl_image) as $key => $photo)
+                              {{-- <img class="img-thumbnail" width="150" src="{{ asset('benImage/'.$photo) }}"> --}}
+                              <img src="{{url('benImage/', $photo)}}" width="150" alt="">
+                          @endforeach
+                          @endif
+                          @endforeach
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">বন্ধ করুন</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </tr> 
                 @endforeach
               
