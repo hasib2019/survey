@@ -95,11 +95,12 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                          @foreach(\App\Models\ImageDetail::select('dtl_image')->where('ben_id', $item->id)->get() as $key => $benImage)
+                          @foreach(json_decode(\App\Models\ImageDetail::select('dtl_image')->where('ben_id', $item->id)->get()) as $key => $benImage)
                           {{-- {{$benImage->dtl_image}}/ --}}
                           @if (!empty($benImage->dtl_image))
                           @foreach (json_decode($benImage->dtl_image) as $key => $photo)
-                              <img class="img-thumbnail" width="150" src="{{ asset('benImage/'.$photo) }}">
+                              {{-- <img class="img-thumbnail" width="150" src="{{ asset('benImage/'.$photo) }}"> --}}
+                              <img src="{{url('benImage/', $photo)}}" width="150" alt="">
                           @endforeach
                           @endif
                           @endforeach
