@@ -22,7 +22,6 @@
       $villageData = $allData?$allData->village:"";
       $infoName = $allData?$allData->informer_name:"";
       $infoDes  = $allData?$allData->informer_designation:"";
-   
       @endphp
     {{-- /////////////////////////////////////////////////////////////////////////////////// --}}
     <div class="row">
