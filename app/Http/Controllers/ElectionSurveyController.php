@@ -268,10 +268,12 @@ class ElectionSurveyController extends Controller
                 $surveyImageDetls->status = 1;
                 $surveyImageDetls->save();
             }
+
             alert()->success('Survey Update Sucessfull!')->autoclose(3000);
             if (Auth::user()->is_admin == 1) {
                 return redirect()->route('admin.all_beneficiaries');
             }
+            
         } else {
             alert()->error('Data Not Update');
             return back();
