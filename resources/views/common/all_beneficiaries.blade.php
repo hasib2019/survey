@@ -77,7 +77,7 @@
                   <td>@if($item->wish_project_loan == 'y') হ্যাঁ @elseif($item->wish_project_loan == 'n') না @endif</td>
                   <td> <img src="{{asset('benImage/'.$item->ben_image)}}" height="50" width="50" alt=""></td>
                   <td>
-                   <a href="" data-toggle="modal" data-target="#exampleModal"><span class="fa fa-eye"></a> 
+                   <a href="" data-toggle="modal" data-target="#exampleModal{{$item->id}}"><span class="fa fa-eye"></a> 
                   @if (Auth::user()->is_admin==1) 
                     <a href="{{route('benEdit', $item->id)}}"><span class="fa fa-edit"></span></a> 
                     <a href="{{route('benDelete', $item->id)}}" onclick="return confirm('আপনি কি ডাটা ডিলিট করতে চান ?')"><span class="fa fa-trash"></span></a>
@@ -85,7 +85,7 @@
                   @endif
                   </td>
                   <!-- Modal -->
-                  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal fade" id="exampleModal{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
