@@ -18,6 +18,7 @@ class CreateImageDetailsTable extends Migration
             $table->bigInteger('ben_id')->unsigned()->nullable();
             $table->foreign('ben_id')->references('id')->on('election_surveys')->onDelete('cascade');
             $table->string('dtl_image')->nullable();
+            $table->string('dtl_image_date')->nullable();
             $table->boolean('status')->nullable();
             $table->string('create_by')->nullable();
             $table->softDeletes();

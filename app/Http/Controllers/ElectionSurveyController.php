@@ -48,6 +48,7 @@ class ElectionSurveyController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->filedate);
         ///////////////////////////////////////////////////////
         $request->validate([
             'ben_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -108,16 +109,17 @@ class ElectionSurveyController extends Controller
             $surveyImageDetls = new ImageDetail();
             $surveyImageDetls->ben_id  = $survay->id;
             $surveyImageDetls->dtl_image = json_encode($files);
+            $surveyImageDetls->dtl_image_date = json_encode($request->filedate);
             $surveyImageDetls->status = 1;
             $surveyImageDetls->save();
-            alert()->success('Survey Save Sucessfull!')->autoclose(2000);
+            alert()->success('জরিপ ডেটা সংরক্ষিত হয়েছে !')->autoclose(2000);
             if (Auth::user()->is_admin == 1) {
                 return redirect()->route('admin.survay.create');
             } elseif (Auth::user()->is_admin == 2) {
                 return redirect()->route('survay.create');
             }
         } else {
-            alert()->error('Data Not Saved');
+            alert()->error('ডেটা সংরক্ষিত হয়নি');
             return back();
         }
     }
@@ -256,15 +258,16 @@ class ElectionSurveyController extends Controller
         $survay->ben_image = $imageName;
         if ($survay->save()) {
             $surveyImageDetls = ImageDetail::where('ben_id', $request->id)->first();
-            // dd($surveyImageDetls->ben_id);
-            if ($surveyImageDetls->ben_id) {
+            if (!empty($surveyImageDetls->ben_id)) {
                 $surveyImageDetls->dtl_image = json_encode($files);
+                $surveyImageDetls->dtl_image_date = json_encode($request->filedate);
                 $surveyImageDetls->status = 1;
                 $surveyImageDetls->save();
             } else {
                 $surveyImageDetls = new ImageDetail();
                 $surveyImageDetls->ben_id  = $request->id;
                 $surveyImageDetls->dtl_image = json_encode($files);
+                $surveyImageDetls->dtl_image_date = json_encode($request->filedate);
                 $surveyImageDetls->status = 1;
                 $surveyImageDetls->save();
             }
