@@ -50,14 +50,15 @@ class ElectionSurveyController extends Controller
     {
         // dd($request->filedate);
         ///////////////////////////////////////////////////////
-        $request->validate([
-            'ben_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-        $imageName = time() . '.' . $request->ben_image->extension();
-        $request->ben_image->move(public_path('benImage'), $imageName);
+        if($request->ben_image){
+            $request->validate([
+                'ben_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+            $imageName = time() . '.' . $request->ben_image->extension();
+            $request->ben_image->move(public_path('benImage'), $imageName);
+        }
         ///////////////////////////////////////////////////////
         $this->validate($request, [
-            'filenames' => 'required',
             'filenames.*' => 'image'
         ]);
 
@@ -104,7 +105,8 @@ class ElectionSurveyController extends Controller
         $survay->allowance_source = $request->allowance_source;
         $survay->wish_project_loan = $request->wish_project_loan;
         $survay->saveaddress = 1;
-        $survay->ben_image = $imageName;
+
+        $survay->ben_image = $request->ben_image?$imageName:"";
         if ($survay->save()) {
             $surveyImageDetls = new ImageDetail();
             $surveyImageDetls->ben_id  = $survay->id;
@@ -276,7 +278,6 @@ class ElectionSurveyController extends Controller
             if (Auth::user()->is_admin == 1) {
                 return redirect()->route('admin.all_beneficiaries');
             }
-            
         } else {
             alert()->error('ডেটা সংরক্ষিত হয়নি');
             return back();
