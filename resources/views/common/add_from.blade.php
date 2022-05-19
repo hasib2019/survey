@@ -309,8 +309,8 @@
             <div class="form-group col-md-8 border">
               <h3>সুফলভোগী অন্যান্য ছবি যোগ করুন</h3>
               <div class="input-group hdtuto control-group lst increment" >
-                <input type="file" name="filenames[]" required class="myfrm form-control">
-                <input type="date" name="filedate[]" required class="myfrm form-control">
+                <input type="file" name="filenames[]" class="myfrm form-control">
+                <input type="date" name="filedate[]" class="myfrm form-control">
                 <div class="input-group-btn"> 
                   <button class="btn btn-success" type="button"><i class="fldemo glyphicon glyphicon-plus"></i><i class="fa fa-plus" aria-hidden="true"></i></button>
                 </div>
