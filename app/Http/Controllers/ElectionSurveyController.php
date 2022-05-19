@@ -203,14 +203,34 @@ class ElectionSurveyController extends Controller
     public function update(Request $request, ElectionSurvey $electionSurvey)
     {
         ///////////////////////////////////////////////////////
-        $request->validate([
-            'ben_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-        $imageName = time() . '.' . $request->ben_image->extension();
-        $request->ben_image->move(public_path('benImage'), $imageName);
+        // $request->validate([
+        //     'ben_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        // ]);
+        // $imageName = time() . '.' . $request->ben_image->extension();
+        // $request->ben_image->move(public_path('benImage'), $imageName);
+        // ///////////////////////////////////////////////////////
+        // $this->validate($request, [
+        //     'filenames' => 'required',
+        //     'filenames.*' => 'image'
+        // ]);
+
+        // $files = [];
+        // if ($request->hasfile('filenames')) {
+        //     foreach ($request->file('filenames') as $file) {
+        //         $name = time() . rand(1, 100) . '.' . $file->extension();
+        //         $file->move(public_path('benImage'), $name);
+        //         $files[] = $name;
+        //     }
+        // }
+        if($request->ben_image){
+            $request->validate([
+                'ben_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+            $imageName = time() . '.' . $request->ben_image->extension();
+            $request->ben_image->move(public_path('benImage'), $imageName);
+        }
         ///////////////////////////////////////////////////////
         $this->validate($request, [
-            'filenames' => 'required',
             'filenames.*' => 'image'
         ]);
 
@@ -257,7 +277,7 @@ class ElectionSurveyController extends Controller
         $survay->allowance_source = $request->allowance_source;
         $survay->wish_project_loan = $request->wish_project_loan;
         $survay->saveaddress = 1;
-        $survay->ben_image = $imageName;
+        $survay->ben_image = $request->ben_image?$imageName:"";;
         if ($survay->save()) {
             $surveyImageDetls = ImageDetail::where('ben_id', $request->id)->first();
             if (!empty($surveyImageDetls->ben_id)) {
